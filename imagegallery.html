@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Responsive Meta Tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Advanced Image Gallery</title>
+<link href="C:\Users\Acer\Downloads\imagegallery.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ================= HEADER SECTION ================= -->
+    <header>
+        <h1>Responsive Image Gallery</h1>
+        <p>HTML • CSS • JavaScript</p>
+    </header>
+
+    <!-- ================= FILTER BUTTONS ================= -->
+    <section class="filter-section">
+        <button onclick="filterImages('all')">All</button>
+        <button onclick="filterImages('nature')">Nature</button>
+        <button onclick="filterImages('city')">City</button>
+        <button onclick="filterImages('animals')">Animals</button>
+    </section>
+
+    <!-- ================= GALLERY SECTION ================= -->
+    <section class="gallery">
+
+        <!-- Image 1 -->
+        <div class="gallery-item nature">
+            <img src="C:\Users\Acer\Downloads\1.jpg" onclick="openLightbox(0)">
+        </div>
+
+        <!-- Image 2 -->
+        <div class="gallery-item city">
+            <img src="C:\Users\Acer\Downloads\3.jpg" onclick="openLightbox(1)">
+        </div>
+
+        <!-- Image 3 -->
+        <div class="gallery-item animals">
+            <img src="C:\Users\Acer\Downloads\5.webp" onclick="openLightbox(2)">
+        </div>
+
+        <!-- Image 4 -->
+        <div class="gallery-item nature">
+            <img src="C:\Users\Acer\Downloads\2.avif" onclick="openLightbox(3)">
+        </div>
+
+        <!-- Image 5 -->
+        <div class="gallery-item city">
+            <img src="C:\Users\Acer\Downloads\4.jpg" onclick="openLightbox(4)">
+        </div>
+
+        <!-- Image 6 -->
+        <div class="gallery-item animals">
+            <img src="C:\Users\Acer\Downloads\6.jpg" onclick="openLightbox(5)">
+        </div>
+
+    </section>
+
+    <!-- ================= LIGHTBOX ================= -->
+    <div id="lightbox">
+
+        <!-- Close Button -->
+        <span class="close" onclick="closeLightbox()">×</span>
+
+        <!-- Previous Button -->
+        <button class="prev" onclick="changeImage(-1)">❮</button>
+
+        <!-- Image Display -->
+        <img id="lightboxImage">
+
+        <!-- Next Button -->
+        <button class="next" onclick="changeImage(1)">❯</button>
+
+    </div>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+        <p>© 2026 Image Gallery Project</p>
+    </footer>
+
+    <!-- ================= INTERNAL JAVASCRIPT ================= -->
+    <script>
+
+        /* =====================================================
+           GLOBAL VARIABLES
+        ===================================================== */
+
+        let currentIndex = 0;
+
+        const galleryImages = document.querySelectorAll(".gallery-item img");
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImage = document.getElementById("lightboxImage");
+
+        /* =====================================================
+           OPEN LIGHTBOX
+        ===================================================== */
+        function openLightbox(index) {
+            currentIndex = index;
+            lightbox.style.display = "flex";
+            lightboxImage.src = galleryImages[currentIndex].src;
+        }
+
+        /* =====================================================
+           CLOSE LIGHTBOX
+        ===================================================== */
+        function closeLightbox() {
+            lightbox.style.display = "none";
+        }
+
+        /* =====================================================
+           NEXT / PREVIOUS IMAGE
+        ===================================================== */
+        function changeImage(step) {
+
+            currentIndex = currentIndex + step;
+
+            if (currentIndex < 0) {
+                currentIndex = galleryImages.length - 1;
+            }
+
+            if (currentIndex >= galleryImages.length) {
+                currentIndex = 0;
+            }
+
+            lightboxImage.src = galleryImages[currentIndex].src;
+        }
+
+        /* =====================================================
+           IMAGE FILTER FUNCTION
+        ===================================================== */
+        function filterImages(category) {
+
+            const items = document.querySelectorAll(".gallery-item");
+
+            items.forEach(item => {
+
+                if (category === "all") {
+                    item.style.display = "block";
+                } 
+                else if (item.classList.contains(category)) {
+                    item.style.display = "block";
+                } 
+                else {
+                    item.style.display = "none";
+                }
+
+            });
+        }
+
+        /* =====================================================
+           KEYBOARD NAVIGATION (BONUS)
+        ===================================================== */
+        document.addEventListener("keydown", function(event) {
+
+            if (lightbox.style.display === "flex") {
+
+                if (event.key === "ArrowRight") {
+                    changeImage(1);
+                }
+
+                if (event.key === "ArrowLeft") {
+                    changeImage(-1);
+                }
+
+                if (event.key === "Escape") {
+                    closeLightbox();
+                }
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
